@@ -4,7 +4,7 @@ import yt_dlp
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 # Credenciales de Spotify
 CLIENT_ID = "c5f9d259f8ba4a448c9055cc0befa4df"
