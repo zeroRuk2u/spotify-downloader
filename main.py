@@ -10,7 +10,7 @@ def home():
         if not playlist_url:
             return "⚠️ Ingresa una URL de playlist", 400
         
-        canciones = obtener_nombres_playlist(playlist_url)
+        import = obtener_nombres_playlist(playlist_url)
         resultados = [descargar_cancion(c) for c in canciones]
 
         return render_template_string(PAGE_TEMPLATE, mensaje="Proceso terminado", resultados=resultados)
