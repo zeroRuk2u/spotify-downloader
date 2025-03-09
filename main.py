@@ -111,6 +111,6 @@ def home():
 # ================================
 # 4. Arrancar la aplicación
 # ================================
-if _name_ == "_main_":
+if __name__ == "_main_":
     # Usa el puerto 5000 (Render suele usar 10000, pero Gunicorn lo sobreescribe)
     app.run(host="0.0.0.0", port=5000, debug=True)
