@@ -40,9 +40,10 @@ def obtener_nombres_playlist(playlist_url, limite=100):
         offset += 100
     return canciones[:limite]
 
-# ================================
+#
 # 2. Función para descargar canción desde YouTube
-# ================================
+#
+
 def descargar_cancion(nombre_cancion):
     """Busca la canción en YouTube y la descarga en MP3 si no existe."""
     nombre_archivo = os.path.join(MUSIC_FOLDER, f"{nombre_cancion}.mp3")
@@ -50,14 +51,15 @@ def descargar_cancion(nombre_cancion):
         return f"⚠️ {nombre_cancion} ya existe."
 
     opciones = {
-        'format': 'bestaudio/best',
-        'outtmpl': nombre_archivo,
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192'
-        }],
-        'quiet': False
+    'format': 'bestaudio/best',
+    'outtmpl': nombre_archivo,
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192'
+    }],
+    'cookies': 'cookies.txt',  # Usa el archivo de cookies
+    'quiet': False
     }
     try:
         with yt_dlp.YoutubeDL(opciones) as ydl:
@@ -66,9 +68,9 @@ def descargar_cancion(nombre_cancion):
     except Exception as e:
         return f"❌ Error con {nombre_cancion}: {str(e)}"
 
-# ================================
+#
 # 3. Página principal con formulario
-# ================================
+# 
 PAGE_TEMPLATE = """
 <!DOCTYPE html>
 <html>
@@ -108,9 +110,9 @@ def home():
     # GET: muestra el formulario
     return render_template_string(PAGE_TEMPLATE, mensaje=None, resultados=[])
 
-# ================================
+# 
 # 4. Arrancar la aplicación
-# ================================
+# 
 if __name__ == "_main_":
     # Usa el puerto 5000 (Render suele usar 10000, pero Gunicorn lo sobreescribe)
     app.run(host="0.0.0.0", port=5000, debug=True)
