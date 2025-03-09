@@ -66,6 +66,36 @@ def descargar_cancion(nombre_cancion):
             ydl.download([f"ytsearch:{nombre_cancion}"])
         return f"✅ Descargado: {nombre_cancion}"
     except Exception as e:
+        return f"❌ Error con {nombre_cancion}: {str(e)}"                canciones.append(f"{nombre} - {artista}")
+        offset += 100
+    return canciones[:limite]
+
+# ================================
+# 2. Función para descargar canción desde YouTube (con cookies)
+# ================================
+def descargar_cancion(nombre_cancion):
+    """Busca la canción en YouTube y la descarga en MP3 si no existe."""
+    nombre_archivo = os.path.join(MUSIC_FOLDER, f"{nombre_cancion}.mp3")
+    if os.path.exists(nombre_archivo):
+        return f"⚠️ {nombre_cancion} ya existe."
+
+    opciones = {
+        'format': 'bestaudio/best',
+        'outtmpl': nombre_archivo,
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192'
+        }],
+        'cookiefile': 'cookies.txt',  # Añad esta línea para usar cookies
+        'quiet': False
+    }
+
+    try:
+        with yt_dlp.YoutubeDL(opciones) as ydl:
+            ydl.download([f"ytsearch:{nombre_cancion}"])
+        return f"✅ Descargado: {nombre_cancion}"
+    except Exception as e:
         return f"❌ Error con {nombre_cancion}: {str(e)}"
 
 #
