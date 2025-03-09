@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, render_template_string
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 # Página principal con formulario
 @app.route("/", methods=["GET", "POST"])
